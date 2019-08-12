@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D19EA1922FEC59000356829 /* badssl.com-client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 7D19EA1822FEB62900356829 /* badssl.com-client.p12 */; };
 		7D53163422FEADB9009DA50A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D53163322FEADB9009DA50A /* AppDelegate.swift */; };
 		7D53163622FEADB9009DA50A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D53163522FEADB9009DA50A /* ViewController.swift */; };
 		7D53163822FEADBA009DA50A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D53163722FEADBA009DA50A /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D19EA1822FEB62900356829 /* badssl.com-client.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "badssl.com-client.p12"; sourceTree = "<group>"; };
 		7D53163022FEADB9009DA50A /* ClientCertificateMutualAuth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClientCertificateMutualAuth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D53163322FEADB9009DA50A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D53163522FEADB9009DA50A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 				7D53163322FEADB9009DA50A /* AppDelegate.swift */,
 				7D53163522FEADB9009DA50A /* ViewController.swift */,
 				7D53163722FEADBA009DA50A /* Assets.xcassets */,
+				7D19EA1822FEB62900356829 /* badssl.com-client.p12 */,
 				7D53163922FEADBA009DA50A /* Main.storyboard */,
 				7D53163C22FEADBA009DA50A /* Info.plist */,
 				7D53163D22FEADBA009DA50A /* ClientCertificateMutualAuth.entitlements */,
@@ -95,6 +98,11 @@
 				TargetAttributes = {
 					7D53162F22FEADB9009DA50A = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -121,6 +129,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D19EA1922FEC59000356829 /* badssl.com-client.p12 in Resources */,
 				7D53163822FEADBA009DA50A /* Assets.xcassets in Resources */,
 				7D53163B22FEADBA009DA50A /* Main.storyboard in Resources */,
 			);
@@ -272,7 +281,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ClientCertificateMutualAuth/ClientCertificateMutualAuth.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = SZLX9RL67H;
 				INFOPLIST_FILE = ClientCertificateMutualAuth/Info.plist;
@@ -291,7 +301,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ClientCertificateMutualAuth/ClientCertificateMutualAuth.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = SZLX9RL67H;
 				INFOPLIST_FILE = ClientCertificateMutualAuth/Info.plist;
