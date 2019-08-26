@@ -67,29 +67,9 @@ class ViewController: NSViewController, URLSessionDelegate {
         hostString = hostSelectPopup.title
         hostLabel.stringValue = hostString
         print (" Trying to connect to \(hostString)")
-        // var request = URLRequest(url: URL(string: hostString)!)
-        // request.timeoutInterval = 5
-        /*
-         socket = WebSocket(request: request)
-         socket.delegate = self
-         socket.pongDelegate = self
-         socket.connect()
-         */
-        // var secIdentity: SecIdentity?
-        var identityTrust:IdentityAndTrust?
-        do {
-            // secIdentity =  try identity(named: "badssl.com-client", password: "badssl.com")
-            identityTrust =  try identityAndTrust(named: "badssl.com-client", password: "badssl.com")
-        }
-        catch {
-            identityTrust = nil
-        }
         
-        print(identityTrust!.certArray)
-        print(identityTrust!.trust)
-        print(identityTrust!.identityRef)
+        makeGetRequest(hostString: hostString)
         
-    
         connectOutlet.isEnabled = false
         disconnectOutlet.isEnabled = true
         sendTextOutlet.isEnabled = true
@@ -152,7 +132,7 @@ class ViewController: NSViewController, URLSessionDelegate {
         sendPingOutlet.isEnabled = false
         textView.string = logString
         
-        makeGetRequest(hostString:"https://client.badssl.com")
+        // makeGetRequest(hostString:"https://client.badssl.com")
 
     }
     
@@ -293,8 +273,51 @@ class ViewController: NSViewController, URLSessionDelegate {
         
     }
     
+    // https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/NetworkingTopics/Articles/OverridingSSLChainValidationCorrectly.html#//apple_ref/doc/uid/TP40012544
+    // https://stackoverflow.com/questions/28983176/nsurlauthenticationmethodservertrust-validation-for-server-certificate
+    // https://stackoverflow.com/questions/24063927/swift-how-to-request-a-url-with-a-self-signed-certificate
+    // https://linuskarlsson.se/blog/validating-server-certificates-signed-by-own-ca-in-swift/
+    
     func getServerUrlCredential(protectionSpace:URLProtectionSpace)->URLCredential?{
         
+        // from: https://stackoverflow.com/questions/34223291/ios-certificate-pinning-with-swift-and-nsurlsession
+        //if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
+        //  if let serverTrust = challenge.protectionSpace.serverTrust {
+                
+            if let serverTrust = protectionSpace.serverTrust {
+                var secresult = SecTrustResultType.invalid
+                let status = SecTrustEvaluate(serverTrust, &secresult)
+                
+                if(errSecSuccess == status) {
+                    if let serverCertificate = SecTrustGetCertificateAtIndex(serverTrust, 0) {
+                        let serverCertificateData = SecCertificateCopyData(serverCertificate)
+                        let data = CFDataGetBytePtr(serverCertificateData);
+                        let size = CFDataGetLength(serverCertificateData);
+                        let cert1 = NSData(bytes: data, length: size)
+                        
+                        print("cert1 = \(cert1)")
+                        
+                        let file_der = Bundle.main.path(forResource: "badssl_server", ofType: "cer")
+                        
+                        if let file = file_der {
+                            if let cert2 = NSData(contentsOfFile: file) {
+                                print("cert2 = \(cert2)")
+                                
+                                if cert1.isEqual(to: cert2 as Data) {
+                                    // completionHandler(URLSession.AuthChallengeDisposition.useCredential, URLCredential(trust:serverTrust))
+                                    //Certificates does match, so we can trust the server
+                                    return URLCredential(trust: serverTrust)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        //}
+        // Pinning failed
+        // completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge, nil)
+        return nil
+ /*
         if let serverTrust = protectionSpace.serverTrust {
             //Check if is valid
             var result = SecTrustResultType.invalid
@@ -314,12 +337,27 @@ class ViewController: NSViewController, URLSessionDelegate {
                 // tbd: l    return nil
                 // tbd: l}
                 
+                let data = CFDataGetBytePtr(serverCertificateData);
+                let size = CFDataGetLength(serverCertificateData);
+                let cert1 = NSData(bytes: data, length: size)
+                let file_der = Bundle.main.path(forResource: "badssl.com-client", ofType: "p12")
+                
+                if let file = file_der {
+                    if let cert2 = NSData(contentsOfFile: file) {
+                        if cert1.isEqual(to: cert2 as Data) {
+                            completionHandler(URLSession.AuthChallengeDisposition.useCredential, URLCredential(trust:serverTrust))
+                            return
+                        }
+                    }
+                }
+                
                 //Certificates does match, so we can trust the server
                 return URLCredential(trust: serverTrust)
             }
         }
         
         return nil
+ */
         
     }
     
@@ -348,3 +386,105 @@ class ViewController: NSViewController, URLSessionDelegate {
     }
 }
 
+// ----
+/*
+// from: https://linuskarlsson.se/blog/validating-server-certificates-signed-by-own-ca-in-swift/
+public func URLSession(session: URLSession, didReceiveChallenge challenge: URLAuthenticationChallenge, completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+        // First load our extra root-CAs to be trusted from the app bundle.
+        let trust = challenge.protectionSpace.serverTrust
+        
+        let rootCa = "eitroot"
+        if let rootCaPath = Bundle.main.path(forResource: rootCa, ofType: "der") {
+            if let rootCaData = NSData(contentsOfFile: rootCaPath) {
+                let rootCert = SecCertificateCreateWithData(nil, rootCaData)
+                
+                //let certArrayRef = CFArrayCreate(nil, UnsafeMutablePointer<UnsafePointer>([rootCert]), 1, nil)
+                let certs: [CFTypeRef] = [rootCert as CFTypeRef]
+                let certArrayRef : CFArray = CFBridgingRetain(certs as NSArray) as! CFArray
+
+                SecTrustSetAnchorCertificates(trust!, certArrayRef)
+                SecTrustSetAnchorCertificatesOnly(trust!, false) // also allow regular CAs.
+            }
+        }
+        
+        var trustResult: SecTrustResultType = SecTrustResultType(rawValue: 0)!
+        SecTrustEvaluate(trust!, &trustResult)
+        
+        if (trustResult == SecTrustResultType.unspecified ||
+            trustResult == SecTrustResultType.proceed) {
+            // Trust certificate.
+            let credential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            challenge.sender!.use(credential, for: challenge)
+        } else {
+            NSLog("Invalid server certificate.")
+            challenge.sender!.cancel(challenge)
+        }
+    }
+    else
+    {
+        NSLog("Got unexpected authentication method \(challenge.protectionSpace.authenticationMethod)");
+        challenge.sender!.cancel(challenge)
+    }
+}
+
+// https://www.yeradis.com/swift-authentication-challenge
+
+public func URLSession(session: URLSession, didReceiveChallenge challenge: URLAuthenticationChallenge, completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    
+    if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+        
+        let trust = challenge.protectionSpace.serverTrust
+        
+        let rootCaCerts = rootCACertificatesData.map() { // fix needed
+            (data) -> CFData? in
+            return CFDataCreate(kCFAllocatorDefault, UnsafePointer(data.bytes), data.length)
+            }.filter({$0 != nil}).map() { ref -> CFTypeRef in
+                return SecCertificateCreateWithData(kCFAllocatorDefault, ref!)!
+        }
+        
+        let certArrayRef : CFArray = CFBridgingRetain(rootCaCerts as NSArray) as! CFArrayRef
+        
+        SecTrustSetAnchorCertificates(trust!, certArrayRef)
+        SecTrustSetAnchorCertificatesOnly(trust!, true) // if "true" then also allows certificates signed with one of the system available root certificates.
+        
+        var trustResult: SecTrustResultType = SecTrustResultType(rawValue: 0)!
+        SecTrustEvaluate(trust!, &trustResult)
+        
+        if (trustResult == SecTrustResultType.unspecified ||
+            trustResult == SecTrustResultType.proceed) {
+            //Trust the server certificate cause its signed with one of the allowed in-house CA
+            let credential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            challenge.sender!.use(credential, for: challenge)
+            
+            completionHandler(URLSession.AuthChallengeDisposition.UseCredential, credential) // fix needed
+        } else {
+            print("Invalid server certificate.") //this also happens with expired certificates
+            challenge.sender!.cancel(challenge)
+            
+            completionHandler(URLSession.AuthChallengeDisposition.CancelAuthenticationChallenge, nil) // fix needed
+        }
+        
+    } else {
+        print("Unexpected authentication method");
+        challenge.sender!.cancel(challenge)
+        completionHandler(URLSession.AuthChallengeDisposition.CancelAuthenticationChallenge, nil) // fix needed
+    }
+    
+}
+
+
+ // So insted of a list with files names, lets find all the “DER” files and load them into an array:
+let enumerator = NSFileManager.defaultManager().enumeratorAtPath(NSBundle.mainBundle().bundlePath)
+while let filePath = enumerator?.nextObject() as? String {
+    if NSURL(fileURLWithPath: filePath).pathExtension == "der" {
+        if let data = NSData(contentsOfURL:(NSBundle.mainBundle().bundleURL.URLByAppendingPathComponent(filePath))) {
+            self.rootCaFiles.append(data)
+        }
+    }
+}
+ 
+ from:  https://www.bugsee.com/blog/ssl-certificate-pinning-in-mobile-applications/
+ 
+ 
+*/
