@@ -288,6 +288,10 @@ class ViewController: NSViewController, URLSessionDelegate {
                 var secresult = SecTrustResultType.invalid
                 let status = SecTrustEvaluate(serverTrust, &secresult)
                 
+                // from: https://infinum.co/the-capsized-eight/how-to-make-your-ios-apps-more-secure-with-ssl-pinning
+                let isServerTrusted:Bool = (secresult == SecTrustResultType.unspecified || secresult == SecTrustResultType.proceed)
+                    print("isServerTrusted = \(isServerTrusted)")
+                
                 if(errSecSuccess == status) {
                     if let serverCertificate = SecTrustGetCertificateAtIndex(serverTrust, 0) {
                         let serverCertificateData = SecCertificateCopyData(serverCertificate)
@@ -295,13 +299,13 @@ class ViewController: NSViewController, URLSessionDelegate {
                         let size = CFDataGetLength(serverCertificateData);
                         let cert1 = NSData(bytes: data, length: size)
                         
-                        print("cert1 = \(cert1)")
+                        print("cert1 from SecTrustGetCertificate = \(cert1)")
                         
-                        let file_der = Bundle.main.path(forResource: "badssl_server", ofType: "cer")
+                        let file_der = Bundle.main.path(forResource: "client_badssl_server", ofType: "crt")
                         
                         if let file = file_der {
                             if let cert2 = NSData(contentsOfFile: file) {
-                                print("cert2 = \(cert2)")
+                                print("cert2 from bundle = \(cert2)")
                                 
                                 if cert1.isEqual(to: cert2 as Data) {
                                     // completionHandler(URLSession.AuthChallengeDisposition.useCredential, URLCredential(trust:serverTrust))

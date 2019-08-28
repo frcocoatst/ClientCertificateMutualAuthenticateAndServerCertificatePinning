@@ -13,6 +13,8 @@
 		7D53163622FEADB9009DA50A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D53163522FEADB9009DA50A /* ViewController.swift */; };
 		7D53163822FEADBA009DA50A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D53163722FEADBA009DA50A /* Assets.xcassets */; };
 		7D53163B22FEADBA009DA50A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D53163922FEADBA009DA50A /* Main.storyboard */; };
+		7D6C986C23166ED30005084F /* badssl_server.crt in Resources */ = {isa = PBXBuildFile; fileRef = 7D6C986B23166EA10005084F /* badssl_server.crt */; };
+		7D6C986D23166ED30005084F /* client_badssl_server.crt in Resources */ = {isa = PBXBuildFile; fileRef = 7D6C986A23166EA10005084F /* client_badssl_server.crt */; };
 		7DD104EA2311928C0037AC42 /* NSURLSessionPinningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD104E92311928C0037AC42 /* NSURLSessionPinningDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +28,8 @@
 		7D53163A22FEADBA009DA50A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7D53163C22FEADBA009DA50A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D53163D22FEADBA009DA50A /* ClientCertificateMutualAuth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClientCertificateMutualAuth.entitlements; sourceTree = "<group>"; };
+		7D6C986A23166EA10005084F /* client_badssl_server.crt */ = {isa = PBXFileReference; lastKnownFileType = file; path = client_badssl_server.crt; sourceTree = "<group>"; };
+		7D6C986B23166EA10005084F /* badssl_server.crt */ = {isa = PBXFileReference; lastKnownFileType = file; path = badssl_server.crt; sourceTree = "<group>"; };
 		7DD104E92311928C0037AC42 /* NSURLSessionPinningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSURLSessionPinningDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +69,8 @@
 				7D53163722FEADBA009DA50A /* Assets.xcassets */,
 				7D19EA1822FEB62900356829 /* badssl.com-client.p12 */,
 				7D4D5A152313E5E300901D08 /* badssl_server.cer */,
+				7D6C986B23166EA10005084F /* badssl_server.crt */,
+				7D6C986A23166EA10005084F /* client_badssl_server.crt */,
 				7D53163922FEADBA009DA50A /* Main.storyboard */,
 				7D53163C22FEADBA009DA50A /* Info.plist */,
 				7D53163D22FEADBA009DA50A /* ClientCertificateMutualAuth.entitlements */,
@@ -135,6 +141,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D6C986C23166ED30005084F /* badssl_server.crt in Resources */,
+				7D6C986D23166ED30005084F /* client_badssl_server.crt in Resources */,
 				7D4D5A162313E61100901D08 /* badssl_server.cer in Resources */,
 				7D19EA1922FEC59000356829 /* badssl.com-client.p12 in Resources */,
 				7D53163822FEADBA009DA50A /* Assets.xcassets in Resources */,
