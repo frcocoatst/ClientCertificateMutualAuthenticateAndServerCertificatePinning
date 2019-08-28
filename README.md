@@ -11,12 +11,13 @@ Drag out the certificate and add it to the bundle:
 )
 
 First there is **authenticationMethod=NSURLAuthenticationMethodServerTrust**
+Here certificate pinning is done. 
 The certificate from SecTrustGetCertificate is compared against the stored certificate (badssl.com.cer) in the bundle.
 
 If they are equal **authenticationMethod=NSURLAuthenticationMethodClientCertificate** is executed.
 If the correct client certificate is presented to the server the Status Code gets 200
 
-**HINT: The GUI is not functional yet, except pressing connect**
+**HINT: The GUI is not functional yet, except pressing Connect button**
 
 Output:
 ```
@@ -30,7 +31,7 @@ fda98efd ff0f72be 51060d30 0d06092a 864886f7 0d01010b 0500304d 310b3009 06035504
 
 cert2 from bundle = <30820718 30820600 a0030201 02021001 f202031d fda98efd ff0f72be 
 51060d30 0d06092a 864886f7 0d01010b 0500304d 310b3009 06035504 06130255 53311530 
-13060355 040a130c 44696769 43657274 ....
+13060355 040a130c 44696769 ...
 
 authenticationMethod=NSURLAuthenticationMethodClientCertificate
 (
