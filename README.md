@@ -11,11 +11,11 @@ Drag out the certificate and add it to the bundle:
 )
 
 First there is authenticationMethod=NSURLAuthenticationMethodServerTrust
-The certificate from SecTrustGetCertificate is compared against the store certificate (badssl.com.cer) in the bundle.
+The certificate from SecTrustGetCertificate is compared against the stored certificate (badssl.com.cer) in the bundle.
 
 If they are equal authenticationMethod=NSURLAuthenticationMethodClientCertificate is executed.
-If the correct client certificate is presented to the server the Status Code is 200
+If the correct client certificate is presented to the server the Status Code gets 200
 
-The GUI is not functionalist, except pressing connect
+HINT: The GUI is not functional yet, except pressing connect
 
 
