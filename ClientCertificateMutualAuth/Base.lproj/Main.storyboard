@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -620,7 +620,7 @@
                                         <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <action selector="toggleSourceList:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
+                                                <action selector="toggleSidebar:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
@@ -711,7 +711,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DP4-pQ-J0S">
-                                <rect key="frame" x="126" y="485" width="501" height="17"/>
+                                <rect key="frame" x="125" y="485" width="503" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Working with Client Certificates" id="BcY-TD-fRr">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -787,7 +787,7 @@
                                 </connections>
                             </slider>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r62-Hi-VCe">
-                                <rect key="frame" x="123" y="452" width="506" height="26"/>
+                                <rect key="frame" x="123" y="452" width="506" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="https://client.badssl.com" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="l0E-XM-Kh9" id="LTn-Vr-ehQ">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -796,6 +796,9 @@
                                             <menuItem title="https://client.badssl.com" state="on" id="l0E-XM-Kh9"/>
                                             <menuItem title="https://prod.idrix.eu/secure/" id="Gmp-cp-rhU"/>
                                             <menuItem title="https://server.cryptomix.com/secure/" id="viV-dS-tki"/>
+                                            <menuItem title="http://pinning-test.badssl.com" id="9Sk-MD-nGM">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
@@ -804,7 +807,7 @@
                                 </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6i3-xC-7vR">
-                                <rect key="frame" x="126" y="29" width="502" height="17"/>
+                                <rect key="frame" x="125" y="29" width="503" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="69B-f8-Ow6">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -812,23 +815,27 @@
                                 </textFieldCell>
                             </textField>
                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kty-fr-lmm">
-                                <rect key="frame" x="128" y="54" width="498" height="323"/>
+                                <rect key="frame" x="127" y="54" width="499" height="323"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="oaI-y3-aGs">
-                                    <rect key="frame" x="0.0" y="0.0" width="498" height="323"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="499" height="323"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="2PD-SP-NxF">
-                                            <rect key="frame" x="0.0" y="0.0" width="498" height="323"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="499" height="323"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <size key="minSize" width="498" height="323"/>
-                                            <size key="maxSize" width="498" height="10000000"/>
+                                            <size key="minSize" width="499" height="323"/>
+                                            <size key="maxSize" width="499" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="RcK-Xb-YCA">
-                                    <rect key="frame" x="482" y="0.0" width="16" height="323"/>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="wIC-Ys-EVQ">
+                                    <rect key="frame" x="-100" y="-100" width="498" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="RcK-Xb-YCA">
+                                    <rect key="frame" x="483" y="0.0" width="16" height="323"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>

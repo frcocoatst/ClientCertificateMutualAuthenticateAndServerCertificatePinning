@@ -301,7 +301,7 @@ class ViewController: NSViewController, URLSessionDelegate {
                         
                         print("cert1 from SecTrustGetCertificate = \(cert1)")
                         
-                        let file_der = Bundle.main.path(forResource: "client_badssl_server", ofType: "crt")
+                        let file_der = Bundle.main.path(forResource: "badssl.com", ofType: "cer")
                         
                         if let file = file_der {
                             if let cert2 = NSData(contentsOfFile: file) {
