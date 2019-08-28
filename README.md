@@ -17,7 +17,7 @@ If they are equal authenticationMethod=NSURLAuthenticationMethodClientCertificat
 If the correct client certificate is presented to the server the Status Code gets 200
 
 HINT: The GUI is not functional yet, except pressing connect
-
+```
 Trying to connect to https://client.badssl.com
 authenticationMethod=NSURLAuthenticationMethodServerTrust
 isServerTrusted = true
@@ -36,6 +36,6 @@ Data = Optional(662 bytes)
 Response = Optional(<NSHTTPURLResponse: 0x60800002eca0> { URL: https://client.badssl.com/ } 
 { Status Code: 200, Headers {
 ...
-
+```
 
 
