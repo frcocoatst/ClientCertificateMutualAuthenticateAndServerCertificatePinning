@@ -25,7 +25,7 @@ class NSURLSessionPinningDelegate: NSObject, URLSessionDelegate {
                         let data = CFDataGetBytePtr(serverCertificateData);
                         let size = CFDataGetLength(serverCertificateData);
                         let cert1 = NSData(bytes: data, length: size)
-                        let file_der = Bundle.main.path(forResource: "badssl.com-client", ofType: "p12")
+                        let file_der = Bundle.main.path(forResource: "badssl_server", ofType: "crt")
                         
                         if let file = file_der {
                             if let cert2 = NSData(contentsOfFile: file) {
